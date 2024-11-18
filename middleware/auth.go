@@ -23,7 +23,7 @@ func AuthMiddleware() gin.HandlerFunc {
         tokenString = strings.TrimPrefix(tokenString, "Bearer ")
 
         // 解析 token
-        userID, err := config.ParseToken(tokenString)
+        userId, err := config.ParseToken(tokenString)
         if err != nil {
             c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
             c.Abort()
@@ -31,7 +31,7 @@ func AuthMiddleware() gin.HandlerFunc {
         }
 
         // 将用户 ID 存储在上下文中，以便后续处理
-        c.Set("userID", userID)
+        c.Set("userId", userId)
         c.Next()
     }
 }

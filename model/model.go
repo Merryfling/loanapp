@@ -4,22 +4,25 @@ import "time"
 
 // User 用户模型
 type User struct {
-    ID       uint   `gorm:"primaryKey"`
+    Id       uint64   `gorm:"primaryKey"`
     Phone    string `gorm:"unique"`
     Password string
     Name     string
-    IDNumber string
+    IdNumber string
 }
 
-// LoanApplication 贷款申请模型
-type LoanApplication struct {
-    ID          uint      `gorm:"primaryKey"`
-    UserID      uint
-    Income      float64
-    LoanAmount  float64
-    LoanTerm    int
+// Application 贷款申请模型
+type Application struct {
+    Id          uint64      `gorm:"primaryKey"`
+    UserId      uint64
+    Income      uint64
+    LoanAmount  uint64
+    LoanTerm    uint64
     LoanPurpose string
     Status      string
-    Score       int
-    CreatedAt   time.Time
+    Score       uint64
+    Remark      string // 这个记录admin想法
+    Comment     string // 这个给用户
+	SubmitTime  time.Time
+	UpdateTime  time.Time
 }

@@ -23,7 +23,7 @@ func InitDB() {
     }
 
     // 自动迁移模型到数据库
-    if err := DB.AutoMigrate(&model.User{}, &model.LoanApplication{}); err != nil {
+    if err := DB.AutoMigrate(&model.User{}, &model.Application{}); err != nil {
         log.Fatalf("failed to migrate database: %v", err)
     }
 

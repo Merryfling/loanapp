@@ -19,13 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	LoanAppService_Register_FullMethodName          = "/loanapp.LoanAppService/Register"
-	LoanAppService_Login_FullMethodName             = "/loanapp.LoanAppService/Login"
-	LoanAppService_ApplyLoan_FullMethodName         = "/loanapp.LoanAppService/ApplyLoan"
-	LoanAppService_GetLoanStatus_FullMethodName     = "/loanapp.LoanAppService/GetLoanStatus"
-	LoanAppService_GetLoanHistory_FullMethodName    = "/loanapp.LoanAppService/GetLoanHistory"
-	LoanAppService_GetUserProfile_FullMethodName    = "/loanapp.LoanAppService/GetUserProfile"
-	LoanAppService_UpdateUserProfile_FullMethodName = "/loanapp.LoanAppService/UpdateUserProfile"
+	LoanAppService_Register_FullMethodName           = "/loanapp.LoanAppService/Register"
+	LoanAppService_Login_FullMethodName              = "/loanapp.LoanAppService/Login"
+	LoanAppService_GetUserProfile_FullMethodName     = "/loanapp.LoanAppService/GetUserProfile"
+	LoanAppService_UpdateUserProfile_FullMethodName  = "/loanapp.LoanAppService/UpdateUserProfile"
+	LoanAppService_ApplyLoan_FullMethodName          = "/loanapp.LoanAppService/ApplyLoan"
+	LoanAppService_ApplicationStatus_FullMethodName  = "/loanapp.LoanAppService/ApplicationStatus"
+	LoanAppService_ApplicationHistory_FullMethodName = "/loanapp.LoanAppService/ApplicationHistory"
 )
 
 // LoanAppServiceClient is the client API for LoanAppService service.
@@ -36,11 +36,11 @@ const (
 type LoanAppServiceClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	ApplyLoan(ctx context.Context, in *LoanApplicationRequest, opts ...grpc.CallOption) (*LoanApplicationResponse, error)
-	GetLoanStatus(ctx context.Context, in *LoanStatusRequest, opts ...grpc.CallOption) (*LoanStatusResponse, error)
-	GetLoanHistory(ctx context.Context, in *LoanHistoryRequest, opts ...grpc.CallOption) (*LoanHistoryResponse, error)
-	GetUserProfile(ctx context.Context, in *UserProfileRequest, opts ...grpc.CallOption) (*UserProfileResponse, error)
+	GetUserProfile(ctx context.Context, in *GetUserProfileRequest, opts ...grpc.CallOption) (*GetUserProfileResponse, error)
 	UpdateUserProfile(ctx context.Context, in *UpdateUserProfileRequest, opts ...grpc.CallOption) (*UpdateUserProfileResponse, error)
+	ApplyLoan(ctx context.Context, in *ApplicationRequest, opts ...grpc.CallOption) (*ApplicationResponse, error)
+	ApplicationStatus(ctx context.Context, in *ApplicationStatusRequest, opts ...grpc.CallOption) (*ApplicationStatusResponse, error)
+	ApplicationHistory(ctx context.Context, in *ApplicationHistoryRequest, opts ...grpc.CallOption) (*ApplicationHistoryResponse, error)
 }
 
 type loanAppServiceClient struct {
@@ -71,39 +71,9 @@ func (c *loanAppServiceClient) Login(ctx context.Context, in *LoginRequest, opts
 	return out, nil
 }
 
-func (c *loanAppServiceClient) ApplyLoan(ctx context.Context, in *LoanApplicationRequest, opts ...grpc.CallOption) (*LoanApplicationResponse, error) {
+func (c *loanAppServiceClient) GetUserProfile(ctx context.Context, in *GetUserProfileRequest, opts ...grpc.CallOption) (*GetUserProfileResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(LoanApplicationResponse)
-	err := c.cc.Invoke(ctx, LoanAppService_ApplyLoan_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *loanAppServiceClient) GetLoanStatus(ctx context.Context, in *LoanStatusRequest, opts ...grpc.CallOption) (*LoanStatusResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(LoanStatusResponse)
-	err := c.cc.Invoke(ctx, LoanAppService_GetLoanStatus_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *loanAppServiceClient) GetLoanHistory(ctx context.Context, in *LoanHistoryRequest, opts ...grpc.CallOption) (*LoanHistoryResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(LoanHistoryResponse)
-	err := c.cc.Invoke(ctx, LoanAppService_GetLoanHistory_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *loanAppServiceClient) GetUserProfile(ctx context.Context, in *UserProfileRequest, opts ...grpc.CallOption) (*UserProfileResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UserProfileResponse)
+	out := new(GetUserProfileResponse)
 	err := c.cc.Invoke(ctx, LoanAppService_GetUserProfile_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -121,6 +91,36 @@ func (c *loanAppServiceClient) UpdateUserProfile(ctx context.Context, in *Update
 	return out, nil
 }
 
+func (c *loanAppServiceClient) ApplyLoan(ctx context.Context, in *ApplicationRequest, opts ...grpc.CallOption) (*ApplicationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ApplicationResponse)
+	err := c.cc.Invoke(ctx, LoanAppService_ApplyLoan_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *loanAppServiceClient) ApplicationStatus(ctx context.Context, in *ApplicationStatusRequest, opts ...grpc.CallOption) (*ApplicationStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ApplicationStatusResponse)
+	err := c.cc.Invoke(ctx, LoanAppService_ApplicationStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *loanAppServiceClient) ApplicationHistory(ctx context.Context, in *ApplicationHistoryRequest, opts ...grpc.CallOption) (*ApplicationHistoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ApplicationHistoryResponse)
+	err := c.cc.Invoke(ctx, LoanAppService_ApplicationHistory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LoanAppServiceServer is the server API for LoanAppService service.
 // All implementations must embed UnimplementedLoanAppServiceServer
 // for forward compatibility.
@@ -129,11 +129,11 @@ func (c *loanAppServiceClient) UpdateUserProfile(ctx context.Context, in *Update
 type LoanAppServiceServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	ApplyLoan(context.Context, *LoanApplicationRequest) (*LoanApplicationResponse, error)
-	GetLoanStatus(context.Context, *LoanStatusRequest) (*LoanStatusResponse, error)
-	GetLoanHistory(context.Context, *LoanHistoryRequest) (*LoanHistoryResponse, error)
-	GetUserProfile(context.Context, *UserProfileRequest) (*UserProfileResponse, error)
+	GetUserProfile(context.Context, *GetUserProfileRequest) (*GetUserProfileResponse, error)
 	UpdateUserProfile(context.Context, *UpdateUserProfileRequest) (*UpdateUserProfileResponse, error)
+	ApplyLoan(context.Context, *ApplicationRequest) (*ApplicationResponse, error)
+	ApplicationStatus(context.Context, *ApplicationStatusRequest) (*ApplicationStatusResponse, error)
+	ApplicationHistory(context.Context, *ApplicationHistoryRequest) (*ApplicationHistoryResponse, error)
 	mustEmbedUnimplementedLoanAppServiceServer()
 }
 
@@ -150,20 +150,20 @@ func (UnimplementedLoanAppServiceServer) Register(context.Context, *RegisterRequ
 func (UnimplementedLoanAppServiceServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedLoanAppServiceServer) ApplyLoan(context.Context, *LoanApplicationRequest) (*LoanApplicationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ApplyLoan not implemented")
-}
-func (UnimplementedLoanAppServiceServer) GetLoanStatus(context.Context, *LoanStatusRequest) (*LoanStatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetLoanStatus not implemented")
-}
-func (UnimplementedLoanAppServiceServer) GetLoanHistory(context.Context, *LoanHistoryRequest) (*LoanHistoryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetLoanHistory not implemented")
-}
-func (UnimplementedLoanAppServiceServer) GetUserProfile(context.Context, *UserProfileRequest) (*UserProfileResponse, error) {
+func (UnimplementedLoanAppServiceServer) GetUserProfile(context.Context, *GetUserProfileRequest) (*GetUserProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserProfile not implemented")
 }
 func (UnimplementedLoanAppServiceServer) UpdateUserProfile(context.Context, *UpdateUserProfileRequest) (*UpdateUserProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserProfile not implemented")
+}
+func (UnimplementedLoanAppServiceServer) ApplyLoan(context.Context, *ApplicationRequest) (*ApplicationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ApplyLoan not implemented")
+}
+func (UnimplementedLoanAppServiceServer) ApplicationStatus(context.Context, *ApplicationStatusRequest) (*ApplicationStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ApplicationStatus not implemented")
+}
+func (UnimplementedLoanAppServiceServer) ApplicationHistory(context.Context, *ApplicationHistoryRequest) (*ApplicationHistoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ApplicationHistory not implemented")
 }
 func (UnimplementedLoanAppServiceServer) mustEmbedUnimplementedLoanAppServiceServer() {}
 func (UnimplementedLoanAppServiceServer) testEmbeddedByValue()                        {}
@@ -222,62 +222,8 @@ func _LoanAppService_Login_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LoanAppService_ApplyLoan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoanApplicationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LoanAppServiceServer).ApplyLoan(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LoanAppService_ApplyLoan_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoanAppServiceServer).ApplyLoan(ctx, req.(*LoanApplicationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LoanAppService_GetLoanStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoanStatusRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LoanAppServiceServer).GetLoanStatus(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LoanAppService_GetLoanStatus_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoanAppServiceServer).GetLoanStatus(ctx, req.(*LoanStatusRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LoanAppService_GetLoanHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoanHistoryRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LoanAppServiceServer).GetLoanHistory(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LoanAppService_GetLoanHistory_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoanAppServiceServer).GetLoanHistory(ctx, req.(*LoanHistoryRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _LoanAppService_GetUserProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserProfileRequest)
+	in := new(GetUserProfileRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -289,7 +235,7 @@ func _LoanAppService_GetUserProfile_Handler(srv interface{}, ctx context.Context
 		FullMethod: LoanAppService_GetUserProfile_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoanAppServiceServer).GetUserProfile(ctx, req.(*UserProfileRequest))
+		return srv.(LoanAppServiceServer).GetUserProfile(ctx, req.(*GetUserProfileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -312,6 +258,60 @@ func _LoanAppService_UpdateUserProfile_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LoanAppService_ApplyLoan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApplicationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LoanAppServiceServer).ApplyLoan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LoanAppService_ApplyLoan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LoanAppServiceServer).ApplyLoan(ctx, req.(*ApplicationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LoanAppService_ApplicationStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApplicationStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LoanAppServiceServer).ApplicationStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LoanAppService_ApplicationStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LoanAppServiceServer).ApplicationStatus(ctx, req.(*ApplicationStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LoanAppService_ApplicationHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApplicationHistoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LoanAppServiceServer).ApplicationHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LoanAppService_ApplicationHistory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LoanAppServiceServer).ApplicationHistory(ctx, req.(*ApplicationHistoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LoanAppService_ServiceDesc is the grpc.ServiceDesc for LoanAppService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -328,24 +328,24 @@ var LoanAppService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _LoanAppService_Login_Handler,
 		},
 		{
-			MethodName: "ApplyLoan",
-			Handler:    _LoanAppService_ApplyLoan_Handler,
-		},
-		{
-			MethodName: "GetLoanStatus",
-			Handler:    _LoanAppService_GetLoanStatus_Handler,
-		},
-		{
-			MethodName: "GetLoanHistory",
-			Handler:    _LoanAppService_GetLoanHistory_Handler,
-		},
-		{
 			MethodName: "GetUserProfile",
 			Handler:    _LoanAppService_GetUserProfile_Handler,
 		},
 		{
 			MethodName: "UpdateUserProfile",
 			Handler:    _LoanAppService_UpdateUserProfile_Handler,
+		},
+		{
+			MethodName: "ApplyLoan",
+			Handler:    _LoanAppService_ApplyLoan_Handler,
+		},
+		{
+			MethodName: "ApplicationStatus",
+			Handler:    _LoanAppService_ApplicationStatus_Handler,
+		},
+		{
+			MethodName: "ApplicationHistory",
+			Handler:    _LoanAppService_ApplicationHistory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

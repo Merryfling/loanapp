@@ -9,7 +9,7 @@ import (
 var JWTSecret = []byte("your_secret_key") // 将此密钥替换为安全的随机字符串
 
 // GenerateToken 生成 JWT token
-func GenerateToken(userID uint) (string, error) {
+func GenerateToken(userID uint64) (string, error) {
     // 定义 token 的声明信息
     claims := jwt.MapClaims{
         "user_id": userID,
@@ -22,7 +22,7 @@ func GenerateToken(userID uint) (string, error) {
 }
 
 // ParseToken 解析并验证 token
-func ParseToken(tokenStr string) (uint, error) {
+func ParseToken(tokenStr string) (uint64, error) {
     token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
         // 确保采用的签名算法是 HS256
         if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -37,7 +37,7 @@ func ParseToken(tokenStr string) (uint, error) {
 
     // 获取用户 ID
     if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-        userID := uint(claims["user_id"].(float64))
+        userID := uint64(claims["user_id"].(float64)) // jwt数字默认float64，所以先断言然后转换
         return userID, nil
     }
 

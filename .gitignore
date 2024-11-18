@@ -11,3 +11,4 @@
 go.sum
 go.mod
 loanapp.db
+/config/config.go

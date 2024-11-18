@@ -21,14 +21,14 @@ func main() {
     {
         profile.GET("/profile", handler.GetProfile)
         profile.POST("/profile", handler.UpdateProfile)
+        profile.GET("/history", handler.ApplicationHistory)
     }
 
     // 贷款申请路由（需要认证）
     loan := router.Group("/api/v1/loan", middleware.AuthMiddleware())
     {
         loan.POST("/apply", handler.ApplyLoan)
-        loan.GET("/status/:application_id", handler.GetLoanStatus)
-        loan.GET("/history", handler.GetLoanHistory)
+        loan.GET("/status/:application_id", handler.ApplicationStatus)
     }
 
     router.Run(":666")  // 启动服务器
