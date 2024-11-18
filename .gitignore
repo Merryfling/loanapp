@@ -10,5 +10,5 @@
 # 忽略某个特定的文件
 go.sum
 go.mod
-loanapp.db
 /config/config.go
+loanapp.db

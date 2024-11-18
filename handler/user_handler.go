@@ -21,6 +21,14 @@ func Register(c *gin.Context) {
         Phone:    req.Phone,
         Password: req.Password,  // 实际开发中要对密码加密
     }
+    // 先检查phone存不存在，创建哪怕失败，id都已经自增
+    var existingUser model.User
+    err := config.DB.Where("phone = ?", user.Phone).First(&existingUser).Error
+    if err == nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Phone number already registered"})
+        return
+    }
+
     if err := config.DB.Create(&user).Error; err != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
         return
@@ -143,13 +151,18 @@ func UpdateProfile(c *gin.Context) {
         return
     }
 
-    // TODO: 有提交的就修改
     // 更新用户信息
     if req.Name != "" {
         user.Name = req.Name
     }
     if req.Phone != "" {
         user.Phone = req.Phone
+        var existingPhone User
+        err := db.Where("phone = ?", req.Phone).First(&existingPhone).Error
+        if err == nil {
+            c.JSON(http.StatusInternalServerError, gin.H{"error": "This phone number is already used"})
+            return
+        }
     }
     if req.Password != "" {
         user.Password = req.Password
